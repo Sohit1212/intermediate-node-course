@@ -1,10 +1,12 @@
-const express= require('express');
-const mongoose= require('mongoose');
-const bodyParser= require('body-parser');
-const port=8000;
-const app= express();
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const port = 8000;
+const app = express();
+const User = require('./models/User');
 
 app.use(bodyParser.json());
+mongoose.connect('mongodb://localhost/userData');
 
 app.listen(port, ()=>{
 	console.log(`server is listening on port:${port}`)
