@@ -35,11 +35,39 @@ app.post('/users',(req,res)=>{
 app.route('/users/:id')
 // READ
 .get((req,res)=>{
-  // User.findById()
+	User.findById(req.params.id, (err,data)=>{
+	
+		if(err)
+			res.json({success: false, message:err})
+		else if(!data)
+			res.json({success: false, message:"Not found"})
+		else
+			res.json({success: true, data: data})
+		
+	})
 })
 // UPDATE
 .put((req,res)=>{
-  // User.findByIdAndUpdate()
+	User.findByIdAndUpdate(
+		req.params.id,
+		{$set:{
+			name: req.body.newData.name,
+			email: req.body.newData.email,
+			password: req.body.newData.password
+		}},
+		{
+			new: true
+		},
+		
+		(err, data)=>{
+			if(err)
+				res.json({success: false, message:err})
+			else if(!data)
+				res.json({success: false, message:"Not found"})
+			else
+				res.json({success: true, data: data})
+		}
+	)
 })
 // DELETE
 .delete((req,res)=>{
